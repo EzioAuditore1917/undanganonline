@@ -62,6 +62,8 @@
 </head>
 <body>
 
+<audio id="background-music" src="audio/u.mp3" preload="auto" loop></audio>
+
 <div class="fh5co-loader"></div>
 
 <div id="page">
@@ -183,6 +185,8 @@
 
 		</div>
 	</footer>
+
+
 </div>
 <!--</div>-->
 
@@ -457,6 +461,30 @@
 	// Since we are using dynamic mode, we need to programmatically open lightGallery
 	inlineGallery.openGallery();
 </script>
+
+<script>
+	document.addEventListener('DOMContentLoaded', (event) => {
+    const audio = document.getElementById('background-music');
+    audio.autoplay = true;
+    audio.load();
+    
+    // Check if the audio can play immediately
+    if (audio.readyState >= 3) {  // HAVE_FUTURE_DATA
+        audio.play().catch(error => {
+            console.log("Autoplay was prevented:", error);
+        });
+    } else {
+        // Fallback for older browsers or if the file is not ready
+        audio.addEventListener('canplay', () => {
+            audio.play().catch(error => {
+                console.log("Autoplay was prevented:", error);
+            });
+        });
+    }
+});
+</script>
+
+
 
 </body>
 </html>
